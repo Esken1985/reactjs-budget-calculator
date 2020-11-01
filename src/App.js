@@ -19,6 +19,8 @@ function App() {
   const [charge, setCharge] = useState("");
   const [amount, setAmount] = useState("");
   const [alert, setAlert] = useState({ show: false });
+  const [edit, setEdit] = useState(false);
+  const [id, setId] = useState(0)
 
   const handleCharge = (e) => {
     setCharge(e.target.value);
@@ -50,6 +52,18 @@ function App() {
       handleAlert({ type: "danger", text: "no items to add" });
     }
   };
+  const clearItems = () => {
+    setExpenses([]);
+    handleAlert({ type: "danger", text: "all items were deleted" });
+  };
+  const handleDelete = (id) => {
+    let tempExpenses = expenses.filter((item) => item.id !== id);
+    setExpenses(tempExpenses);
+    handleAlert({ type: "danger", text: "item deleted" });
+  };
+  const handleEdit = (id) => {
+    console.log(id);
+  };
 
   return (
     <>
@@ -63,7 +77,12 @@ function App() {
           handleCharge={handleCharge}
           handleSubmit={handleSubmit}
         />
-        <ExpenseList expenses={expenses} />
+        <ExpenseList
+          expenses={expenses}
+          clearItems={clearItems}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+        />
       </main>
       <h1>
         total spending :{" "}
